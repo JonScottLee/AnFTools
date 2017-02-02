@@ -1,106 +1,92 @@
-var t;
+var doc = document.getElementById("response");
 
 $(document).ready( function() {
-
-  var createChromeTab = function(url) {
-    return chrome.tabs.create({
-      url: url
-    })
-  }
-
-  var API_URL = "https://domai.nr/api/json/search?client_id=chrome_extension&q="
-    , selected_domain
-
-  $("#search-form").submit( function(evt) {
-    evt.preventDefault()
-
-    $("#loader").css('visibility', 'visible');
-    var query = $("#query").val()
-
-    if (!query.length) {
-      $("#search-query").remove();
-      $.each($("#results-list li"), function(idx, el) {
-        $(el).remove();
-      });
-      $("#loader").css('visibility', 'hidden');     // hide the spinny thingy.
-    } else {
-      $.getJSON(API_URL + query, null, function(response) {
-        $("#results-list").empty()
-        if ($("#search-query").length) {
-          $("#search-query").text(query)
-        } else {
-          $("<p id='search-query'>" + query + "</p>").insertBefore("#results")
-        }
-        $.each(response.results,function(i, result){
-          $("#results-list").append("<li class='" + result.availability + "'><a href='https://domai.nr/" + query + "'><span class='bg'></span><span class='domain'>" + result.domain + "</span></a></li>")
+    var createChromeTab = function(url) {
+        return chrome.tabs.create({
+            url: url
         })
-        $("#loader").css('visibility', 'hidden');     // hide the spinny thingy.
-      });
-    }
-  })
+    };
 
-  function moveSelectionUp() {
-    if ( $(".selected").length ) {
-      if ( $(".selected").prev().length ) {
-        $("#results-list li.selected").removeClass('selected')
-                                      .prev()
-                                      .addClass('selected')
-      } else {
-        $("#results-list li.selected").removeClass('selected')
-        $("#results-list li").last().addClass('selected')
-      }
-    } else {
-      $("#results-list li").last().addClass('selected')
-    }
-  };
+    var JENKINS_API_URL = "http://ecom106.abercrombie.com:8100/job/WCS-StaticBuildDeploy-v3.0/lastBuild/consoleText";
+    var BTOA = "jlee:46464d0fc4eeb4877e8595628ac14823";
 
-  function moveSelectionDown() {
-    if ( $(".selected").length ) {
-      if ( $(".selected").next().length ) {
-        $("#results-list li.selected").removeClass('selected')
-                                      .next()
-                                      .addClass('selected')
-      } else {
-        $("#results-list li.selected").removeClass('selected')
-        $("#results-list li").first().addClass('selected')
-      }
-    } else {
-      $("#results-list li").first().addClass('selected')
-    }
-  };
-
-  $("#query").keydown( function(evt) {
-    var keyCode = evt.keyCode;
-
-    if (keyCode === 38 || keyCode === 40) {
-      if (keyCode === 38) {
-        moveSelectionUp();
-      } else {
-        moveSelectionDown();
-      }
+    function getBeforeSend (xhr) {
+        return xhr.setRequestHeader("Authorization", "Basic " + btoa(BTOA));
     }
 
-    else if (keyCode === 13) {
-      var val = $(this).val();
-      var $selected = $(".selected");
-      if ($selected.length) {
-        var url = $(".selected a").attr('href') + "/with/" + $(".selected a").text();
-        createChromeTab(url);
-      }
-      return false;
+    function getRegex () {
+        return /(hotfix|bugfix|feature).*?\s*:\s*(success|fail|not)/ig;
     }
 
-    else {
-      window.clearTimeout(t)
-      t = window.setTimeout( function() {
-        $("#search-form").submit()
-      }, 200);
+    function getMergeStrings (text) {
+        var doc2 = document.getElementById("response");
+        var regex = getRegex();
+        var branchesAsText = text.match(regex);
+        var branchesObj = {
+            "branches": {}
+        };
+
+        return branchesAsText;
     }
-  });
 
-  $("#results-list li a").live('click', function(ev) {
-    var url = $(this).attr('href') + "/with/" + $(this).text()
-    createChromeTab(url)
-  });
+    function processTemplate (branchesArrOrig) {
+        var branchInfo,
+            branchName,
+            branchStatus;
 
-})
+        var branchesArr = branchesArrOrig.filter(function(elem, index, self) {
+            return index == self.indexOf(elem);
+        });
+
+        var results = { "branches": [] };
+        var template =
+            `<ul class="list-group">` +
+                `{{#branches}}` +
+                    `<li class="list-group-item list-group-item-{{branchMergeBootstrapText}}">{{{branchName}}}: {{branchMergeStatus}}<a class="go-to-jira" href="http://jira/browse/{{{branchName}}}"> (see JIRA)</a></li>` +
+                `{{/branches}}` +
+            `</ul>`;
+
+        for (i = 0, len = branchesArr.length; i < len; i++) {
+            branchInfo = branchesArr[i].split(":");
+            branchName = branchInfo[0].trim();
+            branchMergeStatus = branchInfo[1].trim().toLowerCase();
+
+            results.branches[i] = {
+                branchName: branchName,
+                branchMergeBootstrapText: branchMergeStatus === 'success' ? 'success' : 'danger',
+                branchMergeStatus: branchMergeStatus
+            }
+        }
+
+        var processedTemplate = Mustache.to_html(template, results);
+
+        document.getElementById("response").innerHTML = processedTemplate;
+    }
+
+    function getJenkinsBuildConsole () {
+        var $doc = $("#response");
+        var xhr = new XMLHttpRequest();
+        var mergeStrings;
+
+        xhr.open("GET", JENKINS_API_URL, true);
+        xhr.setRequestHeader("Authorization", "Basic " + btoa("jlee:46464d0fc4eeb4877e8595628ac14823"));
+
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4) {
+            mergeStrings = getMergeStrings(xhr.responseText);
+
+            processTemplate(mergeStrings);
+          }
+        }
+
+        xhr.send();
+
+    };
+
+    $(".btn-jenkins").on("click", getJenkinsBuildConsole);
+
+    $("#jira").on("click", function () {
+        createChromeTab($(this).attr("href"));
+    });
+
+});

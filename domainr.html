@@ -1,4 +1,4 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html lang="en">
   <head>
       <meta charset="utf-8">
@@ -6,26 +6,37 @@
       <link rel="stylesheet" href="stylesheets/built.min.css" />
   </head>
   <body id="container">
-    <div id="left">
-      <form id="search-form">
-        <div class="input-wrapper">
-          <input type="text" id="query" />
-          <img id="loader" src="images/loading.gif" />
-        </div>
-          <input type="submit" id="button" class="button" value="Search" alt="Loading" />
-      </form>
-      <div id="results">
-        <ul id="results-list">
-          <!-- this gets populated -->
-        </ul>
+
+    <h3>Jenkins Branch Status Checker</h3>
+    <p class="status-checker__header-desc">
+      You'll need to know your Jenkins API key. If you don't, please click <span style="text-decoration: underline;" href="#">here</span>.
+    </p>
+    <form role="form">
+       <div class="row">
+         <div class="form-group col-xs-12 floating-label-form-group">
+           <label for="username">username</label>
+           <input class="form-control" type="text" name="username" placeholder="Jenkins Username" autofocus>
+         </div>
+       </div>
+       <div class="row">
+         <div class="form-group col-xs-12 floating-label-form-group">
+           <label for="username">API Key</label>
+           <input class="form-control" type="text" name="username" placeholder="Jenkins API Key">
+         </div>
+       </div>
+     </form>
+    </div>
+    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-jenkins">See Current Branch Status</button>
+        <a class="go-to-jenkins" href="#">See full console output in Jenkins</a>
       </div>
     </div>
-
-    <div id="footer">
-      <p>Powered by <a href="https://www.domai.nr" target="_blank" alt="Domai.nr">Domai.nr</a>.</p>
-    </div>
-
+    <div id="response" class="branches-list"></div>
+      <script src="templates/results.js"></script>
       <script src="js/jquery.min.js"></script>
-      <script src="js/script.js"></script>  
+      <script src="js/mustache.min.js"></script>
+      <script src="js/floating-labels.js"></script>
+      <script src="js/script.js"></script>
     </body>
 </html>

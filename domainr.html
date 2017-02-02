@@ -1,0 +1,31 @@
+<!DOCTYPE html>  
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <title>Domai.nr Chrome Extension</title>
+      <link rel="stylesheet" href="stylesheets/built.min.css" />
+  </head>
+  <body id="container">
+    <div id="left">
+      <form id="search-form">
+        <div class="input-wrapper">
+          <input type="text" id="query" />
+          <img id="loader" src="images/loading.gif" />
+        </div>
+          <input type="submit" id="button" class="button" value="Search" alt="Loading" />
+      </form>
+      <div id="results">
+        <ul id="results-list">
+          <!-- this gets populated -->
+        </ul>
+      </div>
+    </div>
+
+    <div id="footer">
+      <p>Powered by <a href="https://www.domai.nr" target="_blank" alt="Domai.nr">Domai.nr</a>.</p>
+    </div>
+
+      <script src="js/jquery.min.js"></script>
+      <script src="js/script.js"></script>  
+    </body>
+</html>

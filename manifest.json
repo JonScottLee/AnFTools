@@ -1,0 +1,21 @@
+{
+    "name": "Domai.nr Search",
+    "version": "2.2",
+    "description": "Give your domains a happy ending.",
+    "browser_action" : {
+        "default_icon": {
+            "19": "icon-19.png",
+            "38": "icon-38.png"
+        },
+        "default_popup": "domainr.html",
+        "default_title": "Domai.nr Search"
+    },
+    "icons": {
+        "128": "icon_128.png"
+    },
+    "permissions": [
+        "tabs",
+        "<all_urls>"
+    ],
+    "manifest_version": 2
+}

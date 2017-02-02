@@ -1,53 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <title>Domai.nr Chrome Extension</title>
-      <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
-      <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" />
-      <link rel="stylesheet" href="stylesheets/floating-labels.css" />
-      <link rel="stylesheet" href="stylesheets/built.min.css" />
-  </head>
-  <body id="container">
-
-    <h5>A&F Tools</h5>
-    <h3>Jenkins Branch Status Checker</h3>
-    <p class="status-checker__header-desc">
-      You'll need to know your Jenkins API key. If you don't, please click <span style="text-decoration: underline;" href="#">here</span>.
-    </p>
-    <form role="form">
-       <div class="row">
-         <div class="form-group col-xs-12 floating-label-form-group">
-           <label for="username">username</label>
-           <input class="form-control" type="text" name="username" placeholder="Jenkins Username" autofocus>
-         </div>
-       </div>
-       <div class="row">
-         <div class="form-group col-xs-12 floating-label-form-group">
-           <label for="username">API Key</label>
-           <input class="form-control" type="text" name="username" placeholder="Environment API Key">
-         </div>
-       </div>
-        <select class="selectpicker" title="Select Ecomm Environment">
-          <option>ecom101</option>
-          <option>Ketchup</option>
-          <option>Relish</option>
-        </select>
-     </form>
-    </div>
-    <div class="btn-group btn-group-justified" role="group" aria-label="...">
-      <div class="btn-group" role="group">
-        <button type="button" class="btn btn-jenkins">See Current Branch Status</button>
-        <a class="go-to-jenkins" href="#">See full console output in Jenkins</a>
-      </div>
-    </div>
-    <div id="response" class="branches-list"></div>
-      <script src="templates/results.js"></script>
-      <script src="js/jquery.min.js"></script>
-      <script src="js/mustache.min.js"></script>
-      <script src="js/floating-labels.js"></script>
-      <script src="boostrap/js/bootstrap.min.js"></script>
-      <script src="boostrap/js/npm.js"></script>
-      <script src="js/script.js"></script>
+    <head>
+        <meta charset="utf-8">
+        <title>Domai.nr Chrome Extension</title>
+        <link rel="stylesheet" href="stylesheets/bootstrap.min.css" />
+        <!-- <link rel="stylesheet" href="stylesheets/bootstrap-theme.min.css" /> -->
+        <link rel="stylesheet" href="stylesheets/bootstrap-select.min.css">
+        <link rel="stylesheet" href="stylesheets/floating-labels.css" />
+        <link rel="stylesheet" href="stylesheets/built.min.css" />
+    </head>
+    <body id="container">
+        <div class="status-checker__login">
+            <h5>A&F Tools</h5>
+            <h3>Jenkins Branch Status Checker</h3>
+            <p class="status-checker__header-desc">
+            You'll need to know your Jenkins API key. If you don't, please click <span style="text-decoration: underline;" href="#">here</span>.
+            </p>
+            <form role="form">
+                <div class="row">
+                    <div class="form-group col-xs-12 floating-label-form-group">
+                        <label for="username">username</label>
+                        <input class="form-control" type="text" name="username" placeholder="Jenkins Username" autofocus>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-12 floating-label-form-group">
+                        <label for="username">API Key</label>
+                        <input class="form-control" type="text" name="username" placeholder="Environment API Key">
+                    </div>
+                </div>
+                <select data-width="100%" class="status-checker__select status-checker__select--env selectpicker" title="Select Ecomm Environment">
+                    <option>ECOMM 101</option>
+                    <option>ECOMM 102</option>
+                    <option>ECOMM 103</option>
+                    <option>ECOMM 104</option>
+                    <option>ECOMM 105</option>
+                    <option>ECOMM 106</option>
+                    <option>ECOMM 107</option>
+                    <option>ECOMM 108</option>
+                    <option>ECOMM 109</option>
+                    <option data-divider="true"></option>
+                    <option>CERT</option>
+                </select>
+            </form>
+            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-jenkins">See Current Branch Status</button>
+                    <a class="go-to-jenkins" href="#">See full console output in Jenkins</a>
+                </div>
+            </div>
+        </div><!--/status-checker__login-->
+        <div class="status-checker__branches">
+            <div id="response" class="branches-list"></div>
+        </div>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/mustache.min.js"></script>
+        <script src="js/floating-labels.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap-select.min.js"></script>
+        <script src="js/script.js"></script>
     </body>
 </html>

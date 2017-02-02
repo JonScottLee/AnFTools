@@ -1,6 +1,7 @@
 body {
 	width: 400px;
-	padding: 20px 30px 0;
+	padding: 20px 30px;
+    overflow-y: scroll;
 }
 
 /*-----------------*/
@@ -9,6 +10,7 @@ body {
 h1 {
     margin-bottom: 60px;
 }
+
 .status-checker__header-desc {
     margin-bottom: 30px;
 }
@@ -21,16 +23,18 @@ h1 {
 	background: #4885ed;
 	border-radius: 4px;
 	color: #fff;
-	margin-top: 30px;
+	margin-top: 12px;
 	padding: 15px;
 	transition: background-color 0.2s linear;
 }
+
 	.btn-jenkins:hover,
 	.btn-jenkins:active {
 		background-color: #3873d6;
 		color: #fff;
 		opacity: 1;
 	}
+
     .go-to-jenkins {
         clear: both;
         display: block;
@@ -38,11 +42,21 @@ h1 {
         text-align: center;
     }
 
+.dropdown-toggle {
+    margin-top: 12px;
+    padding: 12px;
+}
+
+/*-----------------*/
+/* Select Lists ---*/
+/*-----------------*/
+.status-checker__select--env {
+    padding: 10px 0;
+}
+
 /*-----------------*/
 /* Branches List --*/
 /*-----------------*/
 .branches-list {
-	margin-top: 30px;
+	margin-top: 12px;
 }
-
-

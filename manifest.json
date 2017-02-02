@@ -1,14 +1,14 @@
 {
-    "name": "Domai.nr Search",
-    "version": "2.2",
-    "description": "Give your domains a happy ending.",
+    "name": "A&F Tools",
+    "version": "1.0",
+    "description": "Make life at A&F a little less painful.",
     "browser_action" : {
         "default_icon": {
             "19": "icon-19.png",
             "38": "icon-38.png"
         },
-        "default_popup": "domainr.html",
-        "default_title": "Domai.nr Search"
+        "default_popup": "anftools.html",
+        "default_title": "A&F Tools"
     },
     "icons": {
         "128": "icon_128.png"
